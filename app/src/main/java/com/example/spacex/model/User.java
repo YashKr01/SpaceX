@@ -1,5 +1,6 @@
 package com.example.spacex.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class User {
 
     @PrimaryKey
+    @NonNull
     @SerializedName("id")
     private String id;
 
@@ -82,5 +84,17 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", agency='" + agency + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", hyperlink='" + hyperlink + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

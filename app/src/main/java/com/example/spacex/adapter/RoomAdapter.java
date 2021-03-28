@@ -19,22 +19,20 @@ import com.example.spacex.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<User> users;
-    private UserListener userListener;
 
-    public UserAdapter(Context context, ArrayList<User> users, UserListener userListener) {
+    public RoomAdapter(Context context, ArrayList<User> users) {
         this.context = context;
         this.users = users;
-        this.userListener = userListener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_single_item, parent, false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.room_single_item, parent, false));
     }
 
     @Override
@@ -47,24 +45,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
         Glide.with(context).load(user.getImageUrl()).into(holder.userImage);
 
-        holder.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userListener.save(user);
-            }
-        });
-
-        holder.url.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userListener.loadUrl(user);
-            }
-        });
-
     }
 
-    public void setData(ArrayList<User> userList){
-        users = userList;
+    public void setData(ArrayList<User> user) {
+        users = user;
         notifyDataSetChanged();
     }
 
@@ -77,17 +61,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
         TextView userName, userStatus, userAgency;
         ImageView userImage;
-        Button save, url;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            userName = itemView.findViewById(R.id.user_name);
-            userAgency = itemView.findViewById(R.id.user_agency);
-            userStatus = itemView.findViewById(R.id.user_status);
-            userImage = itemView.findViewById(R.id.user_image);
-            save = itemView.findViewById(R.id.btn_save);
-            url = itemView.findViewById(R.id.btn_url);
+            userName = itemView.findViewById(R.id.user_name2);
+            userAgency = itemView.findViewById(R.id.user_agency2);
+            userStatus = itemView.findViewById(R.id.user_status2);
+            userImage = itemView.findViewById(R.id.user_image2);
 
         }
 

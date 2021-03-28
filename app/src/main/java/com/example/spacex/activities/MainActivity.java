@@ -1,6 +1,7 @@
-package com.example.spacex;
+package com.example.spacex.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,11 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.spacex.R;
 import com.example.spacex.adapter.UserAdapter;
 import com.example.spacex.api.ApiService;
 import com.example.spacex.api.RetrofitInstance;
 import com.example.spacex.listeners.UserListener;
 import com.example.spacex.model.User;
+import com.example.spacex.viewmodel.MyViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements UserListener {
     FloatingActionButton fab;
     UserAdapter userAdapter;
     ArrayList<User> usersList;
+    MyViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements UserListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.fab);
         usersList = new ArrayList<>();
-        //userAdapter = new UserAdapter(this, usersList, this);
+        userAdapter = new UserAdapter(this, usersList, this);
+        viewModel = new ViewModelProvider(this).get(MyViewModel.class);
 
         ApiService apiService = RetrofitInstance.getRetrofit().create(ApiService.class);
         Call<List<User>> call = apiService.getAllUsers();
@@ -79,7 +84,11 @@ public class MainActivity extends AppCompatActivity implements UserListener {
     }
 
     @Override
-    public void save(User users) {
+    public void save(User user) {
+
+        Log.d("TAG", "save: " + user.toString());
+        viewModel.insert(this, user);
+
 
     }
 
